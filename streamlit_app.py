@@ -1,91 +1,32 @@
 import streamlit as st
+import requests
 
 # ==============================
-# STOICHIA - Stoichiometry App
+# WEATHER FORECAST APP
 # ==============================
+
+API_KEY = "ISI_API_KEY_KAMU"
+BASE_URL = "https://api.openweathermap.org/data/2.5/weather"
 
 st.set_page_config(
-    page_title="Stoichia",
-    page_icon="⚗️",
+    page_title="Weather App",
+    page_icon="🌤️",
     layout="centered"
 )
 
-st.title("Stoichia")
-st.subheader("Kalkulator Stoikiometri Sederhana")
-st.write(
-    "Aplikasi ini membantu perhitungan dasar stoikiometri "
-    "untuk mahasiswa kimia dan sains."
-)
+st.title("Aplikasi Ramalan Cuaca")
+st.write("Menampilkan informasi cuaca terkini berdasarkan kota.")
 
-menu = st.sidebar.selectbox(
-    "Pilih Menu",
-    [
-        "Hitung Mol",
-        "Hitung Massa",
-        "Mol ke Massa",
-        "Stoikiometri Reaksi"
-    ]
-)
+kota = st.text_input("Masukkan nama kota", "Jakarta")
 
-# ------------------------------
-# HITUNG MOL
-# ------------------------------
-if menu == "Hitung Mol":
-    st.header("Perhitungan Mol")
+if st.button("Cek Cuaca"):
+    params = {
+        "q": kota,
+        "appid": API_KEY,
+        "units": "metric",
+        "lang": "id"
+    }
 
-    massa = st.number_input("Massa zat (gram)", min_value=0.0)
-    mr = st.number_input("Mr (massa molekul relatif)", min_value=0.0)
+    response = requests.get(BASE_URL, params=params)
 
-    if st.button("Hitung Mol"):
-        if mr == 0:
-            st.error("Mr tidak boleh nol.")
-        else:
-            mol = massa / mr
-            st.success(f"Jumlah mol = {mol:.4f} mol")
-
-# ------------------------------
-# HITUNG MASSA
-# ------------------------------
-elif menu == "Hitung Massa":
-    st.header("Perhitungan Massa")
-
-    mol = st.number_input("Jumlah mol (mol)", min_value=0.0)
-    mr = st.number_input("Mr (massa molekul relatif)", min_value=0.0)
-
-    if st.button("Hitung Massa"):
-        massa = mol * mr
-        st.success(f"Massa zat = {massa:.4f} gram")
-
-# ------------------------------
-# MOL KE MASSA
-# ------------------------------
-elif menu == "Mol ke Massa":
-    st.header("Konversi Mol ke Massa")
-
-    mol = st.number_input("Jumlah mol (mol)", min_value=0.0)
-    mr = st.number_input("Mr zat", min_value=0.0)
-
-    if st.button("Konversi"):
-        massa = mol * mr
-        st.success(f"Hasil konversi = {massa:.4f} gram")
-
-# ------------------------------
-# STOIKIOMETRI REAKSI
-# ------------------------------
-elif menu == "Stoikiometri Reaksi":
-    st.header("Stoikiometri Reaksi Sederhana")
-
-    st.write(
-        "Perhitungan berdasarkan perbandingan koefisien reaksi."
-    )
-
-    mol_diketahui = st.number_input("Mol zat diketahui (mol)", min_value=0.0)
-    koef_diketahui = st.number_input("Koefisien zat diketahui", min_value=1)
-    koef_ditanya = st.number_input("Koefisien zat ditanya", min_value=1)
-
-    if st.button("Hitung Mol Zat Ditanya"):
-        mol_ditanya = (koef_ditanya / koef_diketahui) * mol_diketahui
-        st.success(f"Mol zat ditanya = {mol_ditanya:.4f} mol")
-
-st.markdown("---")
-st.caption("Stoichia © 2025 | Kalkulator Stoikiometri Mahasiswa")
+    if response.stat

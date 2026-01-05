@@ -34,7 +34,6 @@ st.write(f"📌 **Menu yang dipilih:** {menu}")
 # Placeholder (nanti bisa diisi rumus & input)
 st.info("Fitur perhitungan akan ditampilkan di sini.")
 
-
 import streamlit as st
 
 st.set_page_config(

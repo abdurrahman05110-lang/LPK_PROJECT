@@ -32,7 +32,7 @@ st.markdown("---")
 st.write(f"📌 **Menu yang dipilih:** {menu}")
 
 # Placeholder (nanti bisa diisi rumus & input)
-st.info("Fitur perhitungan akan ditampilkan di sini.")
+st.info("Fitur perhitungan akan ditampilkan di sini."
 
 import streamlit as st
 
@@ -619,3 +619,4 @@ if menu == "% v/v":
             else:
                 volume_total = (volume_zat * 100) / persen
                 st.success(f"✅ Volume larutan = **{volume_total:.2f} mL**")
+
